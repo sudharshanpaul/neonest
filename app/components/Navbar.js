@@ -9,6 +9,7 @@ import Chatbot from "./Chatbot";
 import { useAuth } from "../context/AuthContext";
 import { useChatStore } from "@/lib/store/chatStore";
 import { Menu, X } from "lucide-react";
+import NotificationBell from "./NotificationBell";
 
 const tabs = [
   { label: "home", path: "/" },
@@ -71,7 +72,7 @@ const Navbar = () => {
           <div className="bg-white px-6 py-5 rounded-xl shadow-lg text-center w-[320px]">
             <p className="text-gray-800 mb-3">
               Logged out successfully.{" "}
-              <Link href="/Login" className="text-pink-600 font-normal no-underline">
+              <Link href="/Login" onClick={() => setShowModal(false)} className="text-pink-600 font-normal no-underline">
                 Login
               </Link>{" "}
               again!
@@ -85,7 +86,7 @@ const Navbar = () => {
 
       <header className="bg-white/80 backdrop-blur-sm border-b border-pink-100 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between xl:pr-4">
             {/* Logo */}
             {/* changed div tag to link tag so user can redirect to home page whenever they click on navbar logo */}
             <Link href="/" className="flex items-center">
@@ -101,7 +102,7 @@ const Navbar = () => {
             </div>
 
             {/* Nav - Desktop */}
-            <nav className="hidden md:flex items-center gap-4">
+            <nav className="hidden xl:flex items-center gap-4">
               {tabs.map(({ label, path }) => (
                 <Link key={label} href={path} className={`transition-colors capitalize ${pathname === path ? "text-pink-600" : "text-gray-600 hover:text-pink-600"}`}>
                   {label}
@@ -111,6 +112,7 @@ const Navbar = () => {
 
             {/* CTA - Desktop */}
             <div className="hidden md:flex items-center space-x-2">
+              {isAuth && <NotificationBell />}
               <Chatbot />
               {!isAuth ? (
                 <>
